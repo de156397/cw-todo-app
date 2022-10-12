@@ -39,41 +39,74 @@ resource "aws_instance" "managed_nodes" {
 }
 
 resource "aws_security_group" "tf-sec-gr" {
-  name = "project208-sec-gr-desmond"
+  name = "project208-sec-gr-${var.user}"
   tags = {
     Name = "project208-sec-gr"
   }
 
   ingress {
-    from_port   = 22
     protocol    = "tcp"
+    from_port   = 22
     to_port     = 22
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 5000
     protocol    = "tcp"
+    from_port   = 22
+    to_port     = 22
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 5000
     to_port     = 5000
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 3000
     protocol    = "tcp"
+    from_port   = 5000
+    to_port     = 5000
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 3000
     to_port     = 3000
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    from_port   = 5432
     protocol    = "tcp"
+    from_port   = 3000
+    to_port     = 3000
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  ingress {
+    protocol    = "tcp"
+    from_port   = 5432
     to_port     = 5432
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    protocol    = "tcp"
+    from_port   = 5432
+    to_port     = 5432
+    ipv6_cidr_blocks = ["::/0"]
+  }
 
   egress {
-    from_port   = 0
     protocol    = -1
+    from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    protocol    = -1
+    from_port   = 0
+    to_port     = 0
+    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
